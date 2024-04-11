@@ -23,8 +23,8 @@ export default class ProductManager {
         return this.products;
     }
 
-    addProduct(product) {
-        const { title, description, price, thumbnail, code, stock } = product;
+    addProduct(products) {
+        const { title, description, price, thumbnail, code, stock } = products;
 
         const id = this.generateUniqueId();
         const newProduct = { id, title, description, price, thumbnail, code, stock };

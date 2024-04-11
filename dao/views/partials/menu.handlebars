@@ -1,0 +1,31 @@
+
+<ul>
+    <li>
+        <a href="/">Home</a>
+        
+    </li>
+
+
+
+    {{#if login}}
+        <li>
+            <a href="/profile">Profile</a>
+        </li>
+        <li>
+            <a href="/api/sessions/logout">Logout</a>
+        </li>
+        <li>
+            <a href="/api/producs">Products</a>
+        </li>
+
+    {{else}}
+        <li>
+            <a href="/registro">Registro</a>
+        </li>
+        <li>
+            <a href="/login">Login</a>
+        </li>
+
+    {{/if}}
+
+</ul>

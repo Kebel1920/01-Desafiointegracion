@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        
         description: {
             type: String,
             required: true
@@ -29,7 +30,9 @@ const productSchema = new mongoose.Schema(
         stock: {
             type: Number,
             required: true
-        }
+        },
+        userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
+
     },
     {
         timestamps: true, strict: false

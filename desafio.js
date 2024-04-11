@@ -72,44 +72,4 @@ export default class ProductManager {
     }
 }
 
-// // Crear una instancia de la clase ProductManager
-// const productManager = new ProductManager('products.json');
-
-// // Llamar a getProducts (debe devolver un arreglo vacío)
-// console.log(productManager.getProducts());
-
-// // Llamar a addProduct con un nuevo producto
-// const newProduct = productManager.addProduct({
-//     title: "producto prueba",
-//     description: "Este es un producto prueba",
-//     price: 200,
-//     thumbnail: "Sin imagen",
-//     code: "abc123",
-//     stock: 25,
-// });
-
-// console.log("Producto agregado:", newProduct);
-
-// // Llamar a getProducts nuevamente (debe mostrar el producto recién agregado)
-// console.log(productManager.getProducts());
-
-// // Intentar agregar un producto con el mismo código (debe arrojar un error)
-// try {
-//     productManager.addProduct({
-//         title: "producto duplicado",
-//         description: "Este es un producto duplicado",
-//         price: 150,
-//         thumbnail: "Otra imagen",
-//         code: "abc123",
-//         stock: 30,
-//     });
-// } catch (error) {
-//     console.error("Error al agregar producto duplicado:", error.message);
-// }
-
-// // Llamar a getProductById con el id del producto recién agregado
-// const retrievedProduct = productManager.getProductById(newProduct.id);
-// console.log("Producto encontrado por ID:", retrievedProduct);
-
-// // Resto del código de la clase...
 

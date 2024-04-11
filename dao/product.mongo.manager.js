@@ -12,13 +12,14 @@ export default class ProductManagerMongo {
        return await MongoProduct.create(product)
     }
 
-    async getProducts() {
+    async getProduct() {
+
         return await MongoProduct.find().lean();
     }
 
 
 
-    async getProductById(id) {
+    async getProductsById(id) {
         return await MongoProduct.findById(id).lean()
     }
 
