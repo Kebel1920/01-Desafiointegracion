@@ -3,16 +3,15 @@ import local from  "passport-local"
 import { UsuariosManagerMongo } from "../usuariosManagerMONGO.js";
 import { MongoConnection } from "../connections/mongo.connection.js";
 import { creaHash, validaPassword } from "../dao.factory.js";
-
 const mongoConnection = new MongoConnection ();
 await mongoConnection.connect(); 
 
 const usuariosManager = new UsuariosManagerMongo ();
 
 
-// 1) definir la funcion de configuracion
 
 export const inicializaPassport =()=>{
+
 
     passport.use (
         "registro",
@@ -81,6 +80,8 @@ export const inicializaPassport =()=>{
 
         return done(null, usuario)
     })
+
+
 
 }
 

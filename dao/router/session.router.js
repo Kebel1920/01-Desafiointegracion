@@ -1,10 +1,7 @@
 import { Router } from "express";
 import { UsuariosManagerMongo } from "../usuariosManagerMONGO.js";
-import crypto from "crypto"
-
+import { creaHash, validaPassword } from "../dao.factory.js";
 const router=Router()
-const SECRET="SANTIbel1003"
-const creaHash=password=>crypto.createHmac("sha256",SECRET).update(password).digest("hex")
 
 let usuariosManager=new UsuariosManagerMongo()
 
@@ -27,8 +24,8 @@ router.post ('/registro',async (req,res)=>{
     try {
         let nuevoUsuario= await usuariosManager.create({nombre, email, password});
 
-        res.setHeader('Content-Type','application/json');
-        res.status(200).json({payload:"Registro exitoso", nuevoUsuario});
+        // res.setHeader('Content-Type','application/json');
+        // res.status(200).json({payload:"Registro exitoso", nuevoUsuario});
         return res.redirect(`/registro?mensaje=Registro exitoso para ${nombre}`);
 
     } catch (error) {
@@ -53,10 +50,14 @@ router.post('/login',async(req,res)=>{
         return res.status(401).json({error:`Credenciales incorrectas`})
     }
 
-    if(usuario.password!==creaHash(password)){
-        res.setHeader('Content-Type','application/json');
-        return res.status(401).json({error:`Credenciales incorrectas`})
-    }
+    // if(usuario.password!==creaHash(password)){}
+        if (!validaPassword (usuario, password)){
+            res.setHeader('Content-Type','application/json');
+            return res.status(401).json({error:`Credenciales incorrectas`})
+
+        }
+       
+    
 
     usuario={...usuario}
     delete usuario.password
@@ -82,14 +83,16 @@ router.get('/logout',(req,res)=>{
             )
             
         }
-    })
+    });
+    
     
     res.setHeader('Content-Type','application/json');
     res.status(200).json({
         message:"Logout exitoso"
+      
     });
 
-})
+});
 
 export {router} 
 

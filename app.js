@@ -4,13 +4,16 @@ import session from "express-session";
 import { auth } from "./dao/middlewares/auth.js";
 import __dirname from "./dao/dao.factory.js";
 import path from 'path';
-import { inicializaPassport } from "./dao/config/passport.config.js";
 import passport from "passport";
+import { inicializaPassport } from "./dao/config/passport.config.js";
+import { initPassport } from "./dao/config/passport.github.config.js";
+
 
 
 import { router as productRouter} from "./dao/router/product.Router.js";
 import {router as vistasRouter} from "./dao/router/vistas.router.js";
 import { router as sessionsRouter } from "./dao/router/session.router.js";
+import { router as githubRouter } from "./dao/router/github.router.js";
 
 
 const app = express()
@@ -19,15 +22,23 @@ const app = express()
 app.use(express.json());
 app.use (express.urlencoded ({extended:true}))
 
-app.use(session(
-    {
+app.use(session({
     secret: "SANTIbel1003",
-    resave: true, saveUninitialized: true
-    }
-))
+    resave: true, saveUninitialized: true,
+    // store: MongoConnection.create({
+    //     mongoUrl:"mongodb+srv://santiagbeltran567:SANTIbel1003@cluster0.tsp0ooh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    //     ttl:3600
+    // })
+}))
 
 // 2) inicializo passport y sus configuraciones en el app.js
 inicializaPassport()
+app.use (passport.initialize())
+app.use (passport.session ())
+
+
+// Router github
+initPassport()
 app.use (passport.initialize())
 app.use (passport.session ())
 
@@ -44,6 +55,8 @@ app.use ("/api/sessions",sessionsRouter)
 app.use ('/',vistasRouter)
 
 app.use ('/api/products', productRouter)
+
+app.use ("/api/sessions", githubRouter)
 
 
 
