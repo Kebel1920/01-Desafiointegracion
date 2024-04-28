@@ -3,6 +3,7 @@ import local from  "passport-local"
 import { UsuariosManagerMongo } from "../usuariosManagerMONGO.js";
 import { MongoConnection } from "../connections/mongo.connection.js";
 import { creaHash, validaPassword } from "../dao.factory.js";
+import { rolModel } from "../models/rol.model.js";
 const mongoConnection = new MongoConnection ();
 await mongoConnection.connect(); 
 
@@ -32,8 +33,14 @@ export const inicializaPassport =()=>{
                     }
                     // Validacion extra
                     password=creaHash(password)
+
+                    let rol=await rolModel.findOne({descrip:"usuario"})
+                    if(!rol){
+                        rol=await rolModel.create({descrip:"usuario"})
+                    }
+                    rol:rol._id
                     
-                    let nuevoUsuario = await usuariosManager.create ({nombre, email, password})
+                    let nuevoUsuario = await usuariosManager.create ({nombre, email, password,rol})
                     return done (null,nuevoUsuario)
 
                 } catch (error) {
@@ -80,10 +87,4 @@ export const inicializaPassport =()=>{
 
         return done(null, usuario)
     })
-
-
-
 }
-
-
-

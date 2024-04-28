@@ -7,6 +7,7 @@ import path from 'path';
 import passport from "passport";
 import { inicializaPassport } from "./dao/config/passport.config.js";
 import { initPassport } from "./dao/config/passport.github.config.js";
+import * as dotenv from 'dotenv';
 
 
 
@@ -17,13 +18,15 @@ import { router as githubRouter } from "./dao/router/github.router.js";
 
 
 const app = express()
+dotenv.config();
+const SECRET= process.env.MONGOPASSWORD
 
 // Middleware para manejar el cuerpo de las solicitudes
 app.use(express.json());
 app.use (express.urlencoded ({extended:true}))
 
 app.use(session({
-    secret: "SANTIbel1003",
+    secret: SECRET,
     resave: true, saveUninitialized: true,
     // store: MongoConnection.create({
     //     mongoUrl:"mongodb+srv://santiagbeltran567:SANTIbel1003@cluster0.tsp0ooh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
@@ -41,6 +44,7 @@ app.use (passport.session ())
 initPassport()
 app.use (passport.initialize())
 app.use (passport.session ())
+app.use ("/api/sessions", githubRouter)
 
 
 app.use(express.static("./dao/public"))
@@ -56,7 +60,7 @@ app.use ('/',vistasRouter)
 
 app.use ('/api/products', productRouter)
 
-app.use ("/api/sessions", githubRouter)
+
 
 
 
