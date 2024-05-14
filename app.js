@@ -7,8 +7,7 @@ import path from 'path';
 import passport from "passport";
 import { inicializaPassport } from "./dao/config/passport.config.js";
 import { initPassport } from "./dao/config/passport.github.config.js";
-import * as dotenv from 'dotenv';
-
+import { SECRET } from "./dao/dao.factory.js";
 
 
 import { router as productRouter} from "./dao/router/product.Router.js";
@@ -18,8 +17,7 @@ import { router as githubRouter } from "./dao/router/github.router.js";
 
 
 const app = express()
-dotenv.config();
-const SECRET= process.env.MONGOPASSWORD
+
 
 // Middleware para manejar el cuerpo de las solicitudes
 app.use(express.json());
@@ -28,10 +26,7 @@ app.use (express.urlencoded ({extended:true}))
 app.use(session({
     secret: SECRET,
     resave: true, saveUninitialized: true,
-    // store: MongoConnection.create({
-    //     mongoUrl:"mongodb+srv://santiagbeltran567:SANTIbel1003@cluster0.tsp0ooh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    //     ttl:3600
-    // })
+   
 }))
 
 // 2) inicializo passport y sus configuraciones en el app.js

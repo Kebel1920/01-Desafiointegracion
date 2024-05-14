@@ -2,11 +2,12 @@
     import { UsuariosManagerMongo } from "../usuariosManagerMONGO.js";
     import { creaHash, validaPassword } from "../dao.factory.js";
     import jwt from "jsonwebtoken";
-    import * as dotenv from 'dotenv';
+    // import * as dotenv from 'dotenv';
     import { authenticateToken } from "../middlewares/auth.jwt.js";
+    import { SECRET } from "../dao.factory.js";
 
-    dotenv.config();
-    const SECRET= process.env.MONGOPASSWORD
+    // dotenv.config();
+    // const SECRET= process.env.MONGOPASSWORD
 
     const router=Router()
 

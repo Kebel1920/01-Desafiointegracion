@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken"
-import * as dotenv from 'dotenv';
+import { SECRET } from "../dao.factory.js";
+// import * as dotenv from 'dotenv';
 
 
-dotenv.config();
-const SECRET= process.env.MONGOPASSWORD
+// dotenv.config();
+// const SECRET= process.env.MONGOPASSWORD
 
 export const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];

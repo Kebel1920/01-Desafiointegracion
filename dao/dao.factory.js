@@ -3,6 +3,7 @@ import ProductManagerMongo from "./product.mongo.manager.js";
 import {fileURLToPath} from 'url';
 import { dirname } from 'path';
 import bcrypt from "bcrypt"
+import * as dotenv from 'dotenv';
 
 let productDao = {}
 //const messageDao = {}
@@ -36,6 +37,17 @@ const __dirname = dirname(__filename);
 export const creaHash=password=>bcrypt.hashSync(password, bcrypt.genSaltSync(10))
 export const validaPassword=(usuario, password)=>bcrypt.compareSync(password, usuario.password)
 
-
 export default __dirname;
 export {productDao}
+
+
+
+
+
+
+dotenv.config();
+    export const SECRET= process.env.MONGOPASSWORD
+
+
+
+
