@@ -1,11 +1,11 @@
 import passport from "passport";
 import local from  "passport-local"
 import { UsuariosManagerMongo } from "../usuariosManagerMONGO.js";
-import { MongoConnection } from "../connections/mongo.connection.js";
+// import { MongoConnection } from "../connections/mongo.connection.js";
 import { creaHash, validaPassword } from "../dao.factory.js";
 import { rolModel } from "../models/rol.model.js";
-const mongoConnection = new MongoConnection ();
-await mongoConnection.connect(); 
+// const mongoConnection = new MongoConnection ();
+// await mongoConnection.connect(); 
 
 const usuariosManager = new UsuariosManagerMongo ();
 

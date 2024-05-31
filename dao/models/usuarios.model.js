@@ -4,13 +4,11 @@ const usuariosModel=mongoose.model(
     'usuarios',
     new mongoose.Schema(
         {
-            first_name: String, 
-            last_name: String,
+            nombre: String, 
             email: {
                 type: String, unique:true
             }, 
             password: String,
-            age: Number,
             role:{
                 // type: mongoose.Types.ObjectId,
                 // ref: "roles"

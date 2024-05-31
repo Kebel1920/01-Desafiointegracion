@@ -1,13 +1,12 @@
     import { Router } from "express";
     import { UsuariosManagerMongo } from "../usuariosManagerMONGO.js";
-    import { creaHash, validaPassword } from "../dao.factory.js";
+    import { creaHash, validaPassword,SECRET } from "../dao.factory.js";
     import jwt from "jsonwebtoken";
     // import * as dotenv from 'dotenv';
     import { authenticateToken } from "../middlewares/auth.jwt.js";
-    import { SECRET } from "../dao.factory.js";
 
-    // dotenv.config();
-    // const SECRET= process.env.MONGOPASSWORD
+
+
 
     const router=Router()
 
@@ -17,12 +16,14 @@
         const {nombre, email, password} =req.body
         if(!nombre || !email || !password){
             return res.redirect("/registro?error=Faltan datos")
+            // return res.status(400).json({error:`Faltan datos`});
         }
 
         const existe=await usuariosManager.getBy({email})
         if(existe){
 
             return res.redirect(`/registro?error=Ya existen usuarios con email ${email}`)
+            // return res.status(409).json({error:`Ya existen usuarios con email ${email}`});
 
         }
 
@@ -30,14 +31,16 @@
         const hashedPassword=creaHash(password);
 
         try {
-            const nuevoUsuario= await usuariosManager.create({nombre, email, password: hashedPassword});
+            const nuevoUsuario= usuariosManager.create({nombre, email, password: hashedPassword});
 
             // res.setHeader('Content-Type','application/json');
             // res.status(200).json({payload:"Registro exitoso", nuevoUsuario});
             return res.redirect(`/registro?mensaje=Registro exitoso para ${nombre}`);
+            // return res.status(201).json({message:`Registro exitoso para ${nombre}`});
 
         } catch (error) {
-            return res.redirect(`/registro?error=Error 500 - error inesperado`)
+            // return res.redirect(`/registro?error=Error 500 - error inesperado`)
+            return res.status(500).json({error:`Error 500 - error inesperado`});
             
         }
 
@@ -45,7 +48,6 @@
     })
 
     router.post('/login',async(req,res)=>{
-
         const {email, password} =req.body;
         if(!email || !password){
             // res.setHeader('Content-Type','application/json');
@@ -85,31 +87,34 @@
 
 //         res.status(200).json({ message: "Desconectado con éxito" });
 //     });
-    //     req.session.destroy(e=>{
-    //         if(e){
-    //             res.setHeader('Content-Type','application/json');
-    //             return res.status(500).json(
-    //                 {
-    //                     error:`Error inesperado en el servidor - Intente más tarde, o contacte a su administrador`,
-    //                     detalle:`${e.message}`
-    //                 }
-    //             )
+//         req.session.destroy(error=>{
+//             if(error){
+//                 res.setHeader('Content-Type','application/json');
+//                 return res.status(500).json(
+//                     {
+//                         error:`Error inesperado en el servidor - Intente más tarde, o contacte a su administrador`,
+//                         detalle:`${error.message}`
+//                     }
+//                 )
                 
-    //         }
-    //     });
+//             }
+//         });
         
         
-    //     res.setHeader('Content-Type','application/json');
-    //     res.status(200).json({
-    //         message:"Logout exitoso"
+//         res.setHeader('Content-Type','application/json');
+//         res.status(200).json({
+//             message:"Logout exitoso"
         
-    //     });
+//         });
 
-    //     let token=jwt.sign(usuario, SECRET, {expiresIn: 60*5})
+//         let token=jwt.sign(usuario, SECRET, {expiresIn: 60*5})
 
-    //     res.setHeader('Content-Type','application/json')
-    //     res.status(200).json({
-    //         status:"ok", usuario, token  //     })
+//         res.setHeader('Content-Type','application/json')
+//         res.status(200).json({
+//             status:"ok", usuario, token  
+//         })
+
+
 
     router.get('/current', authenticateToken, async (req, res) => {
         const userId = req.user.id; // El ID del usuario extraído del token

@@ -1,5 +1,65 @@
-<h2>Home Page</h2>
+{{!-- <h2>Home Page</h2>
 <hr>
 
 <br><br>
-{{>menu}}
+{{>menu}} --}}
+
+
+{{!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <ul id="product-list"></ul>
+
+    <script>
+        async function fetchProducts() {
+            const response = await fetch('/api/products');
+            const products = await response.json();
+
+            const productList = document.getElementById('product-list');
+            products.forEach(product => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${product.title} - ${product.description} - ${product.price}`;
+                productList.appendChild(listItem);
+            });
+        }
+
+        fetchProducts();
+    </script>
+</body>
+</html> --}}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    {{#if login}}
+    <ul id="product-list">
+        {{#each products}}
+        <li>
+            <h2>{{this.title}}</h2>
+            <p>{{this.description}}</p>
+            <p>Precio: {{this.price}}</p>
+            <img src="{{this.thumbnail}}" alt="{{this.title}}" width="100">
+        </li>
+        {{/each}}
+
+    </ul>
+    {{else}}
+    <p>Por favor, <a href="/login">inicia sesión</a> para ver los productos.</p>
+    {{/if}}
+    
+</body>
+
+
+</html>
+
+

@@ -30,3 +30,4 @@ export class MongoConnection {
         mongoose.connection.close()
     }
 }
+

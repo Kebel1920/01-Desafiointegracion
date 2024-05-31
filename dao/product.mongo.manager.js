@@ -26,7 +26,7 @@ export default class ProductManagerMongo {
     async updateProduct (id, data)  {
         try {
 
-            let upt = await MongoProduct.updateOne({ id: id }, data);
+            let upt = await MongoProduct.updateOne({ _id: id }, data);
             if (upt.modifiedCount) return await this.getProductById(id);
 
         } catch (error) {
@@ -36,7 +36,7 @@ export default class ProductManagerMongo {
 
     async deleteProduct(id) {
         let response = {};
-        let del = await MongoProduct.deleteOne({ id: id });
+        let del = await MongoProduct.deleteOne({ _id: id });
         if (del.deletedCount >= 1) {
             response.error = 0,
             response.message = `The product with id: ${id} has been deleted`;
