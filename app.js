@@ -43,12 +43,14 @@ app.use (passport.initialize())
 app.use (passport.session ())
 
 
-app.use(express.static("./dao/public"))
+// app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'public')));
 
 //  para usar Handlebars
 app.engine('handlebars',handlebars.engine())
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, '/views'));
+
 
 // LLamar los router
 app.use ("/api/sessions",sessionsRouter)
@@ -56,6 +58,13 @@ app.use ('/',vistasRouter)
 app.use ('/api/products', productRouter)
 app.use ('/api/cart',cartRouter)
 app.use ("/api/sessions", githubRouter)
+app.use(express.static('public'));
+app.use(express.static('public'));
+app.use((req, res, next) => {
+    res.header('Content-Type', 'text/css');
+    next();
+});
+app.use(express.urlencoded({extended:true}));
 
 
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <title>Restablecer Contraseña</title>
+</head>
+<body>
+    <h2>Restablecer Contraseña</h2>
+    <hr>
+    <form action="/api/sessions/recover03" method="post">
+    <div id="menssage"></div>
+
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" name="newPassword" placeholder="Ingrese su nueva contraseña" required>
+        <br>
+        <label for="newPassword2">Repeat Password:</label>
+        <input type="password" id="newPassword2" name="newPassword2" placeholder="Reingrese su nueva contraseña" required>
+        <input type="hidden" name="token" value="{{token}}">
+        <br>
+        <input type="submit" value="Restablecer Contraseña">
+        
+    </form>
+</body>
+</html>

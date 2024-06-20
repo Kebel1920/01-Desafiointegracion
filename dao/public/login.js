@@ -9,15 +9,15 @@ btnSubmit.addEventListener("click", async(e)=>{
     let body={
         email:inputEmail.value,
         password:inputPassword.value
-    }
-
+    };
+    try {
     let resultado=await fetch("/api/sessions/login",{
         method:"post",
         headers:{
             "Content-Type":"application/json"
         },
         body:JSON.stringify(body)
-    })
+    });
     let status=resultado.status
     let datos=await resultado.json()
     if(status==200){
@@ -27,5 +27,9 @@ btnSubmit.addEventListener("click", async(e)=>{
         divMensaje.style.color="red"
         divMensaje.innerHTML=datos.error
     }
+    } catch (error) {
+        divMensaje.style.color = "red";
+        divMensaje.innerHTML = 'Error de red: ' + error.message;
+    }
+});
 
-})

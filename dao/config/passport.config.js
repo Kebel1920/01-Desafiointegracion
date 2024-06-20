@@ -15,7 +15,7 @@ export const inicializaPassport =()=>{
 
 
     passport.use (
-        "registro",
+        "record",
         new local.Strategy(
             {
                 usernameField: "email",

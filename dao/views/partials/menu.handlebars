@@ -1,32 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{!-- <link rel="stylesheet" href="css/styles.css"> --}}
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+   
+   
+    <title>Menu</title>
+</head>
+<body>
+    <ul>
+        <!-- Siempre visible -->
+        <li><a href="/">Home</a></li>
 
-<ul>
-    <li>
-        <a href="/">Home</a>
-        
-    </li>
+        <!-- Condicional para usuarios autenticados -->
+        {{#if login}}
+            <li><a href="/api/sessions/profile">Profile</a></li>
+            <li><a href="/api/sessions/logout">Logout</a></li>
+            <li><a href="/api/products">Products</a></li>
+        {{else}}
+            <!-- Si no está autenticado -->
+            <li><a href="record">Record</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/recover01">Restore Password</a></li>
+        <li><a href="/api/sessions/github">Access with GitHub</a></li>
 
+    
+        {{/if}}
+    </ul>
 
-
-    {{#if login}}
-        <li>
-            <a href="/profile">Profile</a>
-        </li>
-        <li>
-            <a href="/api/session/logout">Logout</a>
-        </li>
-        <li>
-            <a href="/api/products">Products</a>
-        </li>
-
-    {{else}}
-        <li>
-            <a href="/registro">Record</a>
-        </li>
-        <li>
-            <a href="/login">Login</a>
-        </li>
-       
-
-    {{/if}}
-
-</ul>
+    {{!-- <script src="js/menu.js"></script> --}}
+</body>
+</html>

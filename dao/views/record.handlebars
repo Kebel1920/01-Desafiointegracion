@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{!-- <link rel="stylesheet" href="css/styles.css"> --}}
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+
+
+    <title>Record</title>
+</head>
+<body>
+    
+{{!-- <h2>Record user:</h2>  --}}
+<hr>
+<form action="/api/sessions/record" method="post">
+
+    {{#if error}}
+        <div style="font-weight: bold; color:red;">{{error}}</div>
+    {{/if}}
+
+    {{#if mensaje}}
+        <div style="font-weight: bold; color:green;">{{mensaje}}</div>
+    {{/if}}
+
+    <input type="text" name="nombre" placeholder="Name">
+    <br>
+    <input type="email" name="email" placeholder="Email">
+    <br>
+    <input type="password" name="password" placeholder="Password">
+    <br>
+        {{!-- <input type="text" name="navegador" value="ok" hidden> --}}
+        <input type="submit" value="Submid">
+    <br>
+
+        {{> menu}}
+</form>
+
+
+</body>
+</html>
+
+

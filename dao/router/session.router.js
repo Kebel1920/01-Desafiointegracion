@@ -4,6 +4,9 @@
     import jwt from "jsonwebtoken";
     // import * as dotenv from 'dotenv';
     import { authenticateToken } from "../middlewares/auth.jwt.js";
+    // import { usuariosModel } from "../models/usuarios.model.js";
+    import sendEmail from "../../nodemailer/nodemailer.js";
+import { usuariosModel } from "../models/usuarios.model.js";
 
 
 
@@ -12,17 +15,17 @@
 
     let usuariosManager=new UsuariosManagerMongo()
 
-    router.post ('/registro',async (req,res)=>{
+    router.post ('/record',async (req,res)=>{
         const {nombre, email, password} =req.body
         if(!nombre || !email || !password){
-            return res.redirect("/registro?error=Faltan datos")
+            return res.redirect("/record?error=Faltan datos")
             // return res.status(400).json({error:`Faltan datos`});
         }
 
         const existe=await usuariosManager.getBy({email})
         if(existe){
 
-            return res.redirect(`/registro?error=Ya existen usuarios con email ${email}`)
+            return res.redirect(`/record?error=Ya existen usuarios con email ${email}`)
             // return res.status(409).json({error:`Ya existen usuarios con email ${email}`});
 
         }
@@ -35,7 +38,7 @@
 
             // res.setHeader('Content-Type','application/json');
             // res.status(200).json({payload:"Registro exitoso", nuevoUsuario});
-            return res.redirect(`/registro?mensaje=Registro exitoso para ${nombre}`);
+            return res.redirect(`/record?mensaje=Registro exitoso para ${nombre}`);
             // return res.status(201).json({message:`Registro exitoso para ${nombre}`});
 
         } catch (error) {
@@ -61,7 +64,7 @@
         }
 
         const token = jwt.sign ({id: usuario._id}, SECRET, {expiresIn: '1h'});
-        res.status(200).json({ message: "Login correcto", usuario: { nombre: usuario.nombre, email: usuario.email }, token });
+        res.status(200).json({ message: "Login correcto", usuario: { nombre: usuario.nombre, email: usuario.email } });
 
     });
     //     if(usuario.password!==creaHash(password)){}
@@ -135,6 +138,94 @@
         }
     });
     
+
+
+    router.post("/recover01", async(req, res)=>{
+        let {email}= req.body
+        if(!email){
+            //     res.setHeader('Content-Type','application/json');
+            //     return res.status(400).json({error:`Complete email`})
+            return res.status(400).json({error:"Por favor complete el campo de email."});
+        }
+    
+    
+        const usuario=await usuariosModel.findOne({email});
+        if(!usuario){
+        //     res.setHeader('Content-Type','application/json');
+        //     return res.status(400).json({error:`No existe usuario...!!!`})
+            return res.status(400).json({ error: "No existe usuario con ese email." });
+        }
+
+        // Verificar el tiempo de solicitud
+        const oneHour = 60 * 60 * 1000;
+        const now = new Date ();
+
+        if (usuario.lastPasswordResetRequest && (now - usuario.lastPasswordResetRequest) < oneHour){
+            return res.status(400).json({error: "Ya ha solicitado la recuperación de contraseña hace menos de una hora. Por favor, espere antes de volver a intentarlo."})
+        }
+
+        //Actualizar el tiempo de solicitud
+        usuario.lastPasswordResetRequest = now;
+        await usuario.save();
+        
+    
+        // delete usuario.password; // eliminar datos confidenciales...
+
+        let token=jwt.sign({id:usuario._id },SECRET, {expiresIn:"1h"})
+        let url=`http://localhost:8080/recover02?token=${token}`;
+        let mensaje=`Ha solicitado reinicio de password. Si no fue usted, avise al admin... para continuar haga click <a href="${url}">aqui</a>`
+    
+            try {
+                await sendEmail(email, "Recupero de password", mensaje);
+                res.redirect("/recover01?mensaje=Recibira un email en breve. Siga los pasos...");
+            } catch (error) {
+            // console.log(error);
+            // res.setHeader('Content-Type','application/json');
+            // return res.status(500).json(
+            console.error("Error en el proceso de recuperación de contraseña:", error);
+            res.status(500).json({
+                    error:`Error inesperado en el servidor - Intente más tarde, o contacte a su administrador`,
+                    detalle:error.message
+            
+                });
+            }
+    
+    });
+    
+
+
+    router.post("/recover03", async (req, res) => {
+        const { token, newPassword, newPassword2 } = req.body;
+        if (!token || !newPassword || !newPassword2) {
+            return res.status(400).json({ error: "Faltan datos" });
+        }
+
+        if (newPassword !== newPassword2){
+            return res.status(400).json({error: "Las contraseñas no coinciden"});
+        }
+    
+        try {
+            const decoded = jwt.verify(token, SECRET);
+            const usuario = await usuariosModel.findById(decoded.id);
+            if (!usuario) {
+                return res.status(400).json({ error: "Usuario no encontrado" });
+            }
+    
+            const hashedPassword = creaHash(newPassword);
+            usuario.password = hashedPassword;
+            await usuario.save();
+            // await usuariosManager.update(usuario._id, usuario);
+    
+            res.status(200).json({ message: "Contraseña actualizada con éxito" });
+        } catch (error) {
+            console.error("Error al restablecer la contraseña:", error);
+            res.status(500).json({
+                error: "Error inesperado en el servidor - Intente más tarde, o contacte a su administrador",
+                detalle: error.message
+            });
+        }
+    });
+
 
 export {router} 
 
