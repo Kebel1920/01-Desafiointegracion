@@ -3,6 +3,10 @@ import { productDao } from "../dao.factory.js";
 import { auth } from "../middlewares/auth.js";
 import { SECRET } from "../dao.factory.js";
 import jwt from 'jsonwebtoken'
+import { MongoProduct } from "../models/mongo.models.js";
+
+
+
 
 export const router=Router()
 
@@ -24,8 +28,26 @@ router.get('/record',(req,res)=>{
 })
 
 router.get('/login',(req,res)=>{
-    res.status(200).render('login', {login:req.session.usuario})
-})
+    const {message} = req.query;
+    res.status(200).render('login', {login:req.session.usuario, message})
+});
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(error => {
+        if (error) {
+            return res.status(500).json({
+                error: 'Error inesperado en el servidor - Intente más tarde, o contacte a su administrador',
+                detalle: `${error.message}`
+            });
+        }
+        res.redirect('/login?mensaje=Logout exitoso')
+        // res.status(500)({message: "Logout exitoso"})
+        
+    });
+});
+
+
+
 
 router.get('/profile', auth, (req,res)=>{
 
@@ -52,19 +74,14 @@ router.get ('/recover02', (req, res)=>{
     // res.status(200).render('recover02',{token});
 });
 
-
-
-// router.get('/recover02', (req, res) => {
-//     const { token } = req.query;
-
-//     try {
-//         jwt.verify(token, SECRET);
-//         // Renderizar la plantilla 'recover02.handlebars'
-//         res.render('recover02', { token });
-//     } catch (error) {
-//         res.status(400).send('Token inválido o expirado');
-//     }
-// });
-
+router.get('/products', auth, async (req, res)=>{
+    try {
+        const userId = req.session.usuario._id;
+        const productos = await MongoProduct.find({userId}).lean ();
+        res.status (200).render('products',{productos, login: req.session.usuario});
+    } catch (error) {
+        res.status(500).json({error: 'Error al obtener los productos del usuario'});
+    }
+});
 
 

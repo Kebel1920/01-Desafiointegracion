@@ -20,11 +20,11 @@ import { MongoProduct } from '../models/mongo.models.js';
 
 export async function getProductUsuario(req, res) {
     try {
-        if (!req.user) {
+        if (!req.session.usuario) {
             return res.status(401).json({ error: 'Usuario no autenticado' });
         }
 
-        const userId = req.user._id;
+        const userId = req.session.usuario._id;
         const productos = await MongoProduct.find({ userId });
         
         return res.status(200).json(productos);

@@ -109,8 +109,33 @@ a:hover {
     text-decoration: underline;
 }
 
+ul.product-list{
+    list-style-type: none;
+    padding: 0;
+    width: 80%;
+    margin: 0 auto;
+}
 
+ul.product-list li {
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1 green, blue, alpha);
+}
 
+ul.product-list h2 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    color: #333333;
+}
 
+ul.product-list p {
+    margin: 5px 0;
+    color: #666666;
+}
 
-
+ul.product-list .price {
+    font-weight: bold;
+    color: #000000;
+}

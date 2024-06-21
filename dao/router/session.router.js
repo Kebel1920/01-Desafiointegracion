@@ -63,10 +63,17 @@ import { usuariosModel } from "../models/usuarios.model.js";
             return res.status(401).json({error:`Credenciales incorrectas`});
         }
 
+        req.session.usuario = {
+            nombre: usuario.nombre,
+            email: usuario.email
+        };
+
         const token = jwt.sign ({id: usuario._id}, SECRET, {expiresIn: '1h'});
         res.status(200).json({ message: "Login correcto", usuario: { nombre: usuario.nombre, email: usuario.email } });
 
     });
+
+    
     //     if(usuario.password!==creaHash(password)){}
     //         if (!validaPassword (usuario, password)){
     //             res.setHeader('Content-Type','application/json');

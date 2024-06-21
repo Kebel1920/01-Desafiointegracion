@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css"> 
 </head>
 <body>
+    {{> menu}}
+
     <h1>Lista de Productos</h1>
-    <ul>
+    <ul class="product-list">
         {{#each productos}}
-            <li>{{this.title}}
-                {{this.description}} 
-                {{this.price}}
-                {{this.thumbnail}}
+            <li>
+                <h2></h2>{{this.title}}</h2>
+                <p> {{this.description}}</p>
+                <p>{{this.price}}</p>
+                {{!-- <img src="{{this.thumbnail}}" alt="Imagen del producto"> --}}
+                
+                
+                
             </li> <!-- Ajusta esto según la estructura de tus productos -->
         {{/each}}
     </ul>

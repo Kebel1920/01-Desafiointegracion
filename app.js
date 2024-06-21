@@ -10,6 +10,7 @@ import { inicializaPassport } from "./dao/config/passport.config.js";
 import { initPassport } from "./dao/config/passport.github.config.js";
 
 
+
 import { router as productRouter} from "./dao/router/product.Router.js";
 import {router as vistasRouter} from "./dao/router/vistas.router.js";
 import { router as sessionsRouter } from "./dao/router/session.router.js";
