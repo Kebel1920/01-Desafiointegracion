@@ -1,0 +1,194 @@
+openapi: 3.0.0
+info:
+  title: Productos
+  description: Documentación de API de Productos
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /products:
+    get:
+      summary: Lista todos los productos
+      parameters:
+        - name: limit
+          in: query
+          description: Límite de productos a retornar
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Una lista de productos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      format: uuid
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    price:
+                      type: number
+                      format: float
+                    thumbnail:
+                      type: string
+                    code:
+                      type: string
+                    stock:
+                      type: number
+                    userId:
+                      type: string
+                      format: uuid
+    post:
+      summary: Crea un nuevo producto
+      requestBody:
+        description: Producto a ser creado
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                  format: float
+                thumbnail:
+                  type: string
+                code:
+                  type: string
+                stock:
+                  type: number
+                userId:
+                  type: string
+                  format: uuid
+      responses:
+        '201':
+          description: Producto creado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    format: uuid
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  price:
+                    type: number
+                    format: float
+                  thumbnail:
+                    type: string
+                  code:
+                    type: string
+                  stock:
+                    type: number
+                  userId:
+                    type: string
+                    format: uuid
+  //{pid}:
+    get:
+      summary: Obtiene un producto por ID
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a obtener
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    format: uuid
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  price:
+                    type: number
+                    format: float
+                  thumbnail:
+                    type: string
+                  code:
+                    type: string
+                  stock:
+                    type: number
+                  userId:
+                    type: string
+                    format: uuid
+        '404':
+          description: Producto no encontrado
+    put:
+      summary: Actualiza un producto por ID
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a actualizar
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Datos del producto a actualizar
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                  format: float
+                thumbnail:
+                  type: string
+                code:
+                  type: string
+                stock:
+                  type: number
+                userId:
+                  type: string
+                  format: uuid
+      responses:
+        '200':
+          description: Producto actualizado exitosamente
+        '400':
+          description: Error al actualizar el producto
+    delete:
+      summary: Elimina un producto por ID
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a eliminar
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Producto eliminado exitosamente
+        '404':
+          description: Producto no encontrado

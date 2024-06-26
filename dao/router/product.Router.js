@@ -24,7 +24,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // para obtener un produto por ID
-router.get('/',async (req, res)=>{
+router.get('/:pid',async (req, res)=>{
     try {
         const productId = req.params.pid;
         const product = await productDao.getProductById(productId);
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
 });
 
 //para actualizar un producto por su ID
-router.put('/', async (req, res) => {
+router.put('/:pid', async (req, res) => {
     try {
         const productId = req.params.pid;
         await productDao.updateProduct(productId, req.body);
@@ -56,7 +56,7 @@ router.put('/', async (req, res) => {
     }
 });
 // Para eliminar in productopor ID
-router.delete('/', async (req, res) => {
+router.delete('/:pi', async (req, res) => {
     try {
         const productId = req.params.pid;
        await productDao.deleteProduct(productId);
