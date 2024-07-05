@@ -56,7 +56,7 @@ router.put('/:pid', async (req, res) => {
     }
 });
 // Para eliminar in productopor ID
-router.delete('/:pi', async (req, res) => {
+router.delete('/:pid', async (req, res) => {
     try {
         const productId = req.params.pid;
        await productDao.deleteProduct(productId);

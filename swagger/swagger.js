@@ -1,9 +1,12 @@
 import express from 'express';
 import swaggerJsdoc from "swagger-jsdoc"
 import swaggerUi from"swagger-ui-express"
+import dotenv from 'dotenv'
 import { router as productRouter} from '../dao/router/product.Router.js';
 import { MongoConnection} from '../dao/connections/mongo.connection.js';
 
+
+dotenv.config ();
 const app = express();
 
 const MongoConnectionInstance = new MongoConnection ();

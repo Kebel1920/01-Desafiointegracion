@@ -9,13 +9,8 @@ paths:
   /products:
     get:
       summary: Lista todos los productos
-      parameters:
-        - name: limit
-          in: query
-          description: Límite de productos a retornar
-          required: false
-          schema:
-            type: integer
+      security:
+        # - bearerAuth: []  # Indica que se requiere autenticación JWT
       responses:
         '200':
           description: Una lista de productos
@@ -24,83 +19,29 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    _id:
-                      type: string
-                      format: uuid
-                    title:
-                      type: string
-                    description:
-                      type: string
-                    price:
-                      type: number
-                      format: float
-                    thumbnail:
-                      type: string
-                    code:
-                      type: string
-                    stock:
-                      type: number
-                    userId:
-                      type: string
-                      format: uuid
+                  $ref: '#/components/schemas/Product'
     post:
       summary: Crea un nuevo producto
+      security:
+        - bearerAuth: []  # Indica que se requiere autenticación JWT
       requestBody:
-        description: Producto a ser creado
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                description:
-                  type: string
-                price:
-                  type: number
-                  format: float
-                thumbnail:
-                  type: string
-                code:
-                  type: string
-                stock:
-                  type: number
-                userId:
-                  type: string
-                  format: uuid
+              $ref: '#/components/schemas/Product'
       responses:
         '201':
           description: Producto creado
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  _id:
-                    type: string
-                    format: uuid
-                  title:
-                    type: string
-                  description:
-                    type: string
-                  price:
-                    type: number
-                    format: float
-                  thumbnail:
-                    type: string
-                  code:
-                    type: string
-                  stock:
-                    type: number
-                  userId:
-                    type: string
-                    format: uuid
-  //{pid}:
+                $ref: '#/components/schemas/Product'
+  /products/{pid}:
     get:
       summary: Obtiene un producto por ID
+      security:
+        # - bearerAuth: []  # Indica que se requiere autenticación JWT
       parameters:
         - name: pid
           in: path
@@ -115,31 +56,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  _id:
-                    type: string
-                    format: uuid
-                  title:
-                    type: string
-                  description:
-                    type: string
-                  price:
-                    type: number
-                    format: float
-                  thumbnail:
-                    type: string
-                  code:
-                    type: string
-                  stock:
-                    type: number
-                  userId:
-                    type: string
-                    format: uuid
+                $ref: '#/components/schemas/Product'
         '404':
           description: Producto no encontrado
     put:
       summary: Actualiza un producto por ID
+      security:
+        # - bearerAuth: []  # Indica que se requiere autenticación JWT
       parameters:
         - name: pid
           in: path
@@ -149,29 +72,11 @@ paths:
             type: string
             format: uuid
       requestBody:
-        description: Datos del producto a actualizar
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                description:
-                  type: string
-                price:
-                  type: number
-                  format: float
-                thumbnail:
-                  type: string
-                code:
-                  type: string
-                stock:
-                  type: number
-                userId:
-                  type: string
-                  format: uuid
+              $ref: '#/components/schemas/Product'
       responses:
         '200':
           description: Producto actualizado exitosamente
@@ -179,6 +84,8 @@ paths:
           description: Error al actualizar el producto
     delete:
       summary: Elimina un producto por ID
+      security:
+        # - bearerAuth: []  # Indica que se requiere autenticación JWT
       parameters:
         - name: pid
           in: path
@@ -192,3 +99,32 @@ paths:
           description: Producto eliminado exitosamente
         '404':
           description: Producto no encontrado
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+        thumbnail:
+          type: string
+        code:
+          type: string
+        stock:
+          type: number
+      required:
+        - title
+        - description
+        - price
+        - thumbnail
+        - code
+        - stock
+security:
+  # - bearerAuth: []  # Definición del esquema de autenticación JWT
+    type: http
+    scheme: bearer
