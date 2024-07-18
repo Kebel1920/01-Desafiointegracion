@@ -1,40 +1,9 @@
-// import mongoose from "mongoose";
-
-// const usuariosModel =  mongoose.model(
-//     'usuarios',
-//     new mongoose.Schema(
-//         {
-//             nombre: String, 
-//             email: {
-//                 type: String, unique:true
-//             }, 
-//             password: String,
-//             role:{
-//                 // type: mongoose.Types.ObjectId,
-//                 // ref: "roles"
-//                 type: String,
-//                 default: 'user'
-//             },
-
-//             // Campo para almacenar el tiempo de solicitud del reset
-//             lastPasswordResetRequest: {
-//                 type: Date,
-//                 default: null
-//             }
-//         },
-//         {
-//             timestamps:true, strict:false
-//         }
-//     )
-// )
-
-
-// export {usuariosModel}
-
-
-
-
 import mongoose from "mongoose";
+
+const documentSchema = new mongoose.Schema({
+    name: String,
+    reference: String
+});
 
 const usuariosSchema = new mongoose.Schema(
     {
@@ -51,6 +20,11 @@ const usuariosSchema = new mongoose.Schema(
             type: Date,
             default: null
         },
+        documents: [documentSchema],
+        last_connection: {
+            type: Date,
+            default: null
+        }
     },
     {
         timestamps: true, strict: false

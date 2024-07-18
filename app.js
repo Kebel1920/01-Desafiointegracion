@@ -16,7 +16,7 @@ import {router as vistasRouter} from "./dao/router/vistas.router.js";
 import { router as sessionsRouter } from "./dao/router/session.router.js";
 import { router as githubRouter } from "./dao/router/github.router.js";
 import { router as cartRouter } from "./dao/cart/router/cart.router.js";
-
+import { router as usersRouter } from "./dao/router/users.router.js";
 
 dotenv.config();
 const app = express()
@@ -61,6 +61,7 @@ app.use ('/api/cart',cartRouter)
 app.use ("/api/sessions", githubRouter)
 app.use(express.static('public'));
 app.use(express.static('public'));
+app.use('/api/users', usersRouter);
 app.use((req, res, next) => {
     res.header('Content-Type', 'text/css');
     next();
