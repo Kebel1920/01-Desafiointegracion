@@ -101,4 +101,10 @@ router.get('/logout', authenticateToken, async (req, res) => {
     }
 });
 
+router.get('/:uid/upload', (req, res) => {
+    const { uid } = req.params;
+    res.render('uploadDocuments', { uid });
+});
+
+
 export {router};
