@@ -84,4 +84,8 @@ router.get('/products', auth, async (req, res)=>{
     }
 });
 
+router.get ('/payment', (req, res)=> {
+    res.render ('payment',{STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY});
+})
+
 

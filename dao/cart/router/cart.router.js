@@ -55,7 +55,7 @@ router.delete('/:id/products/:productId', auth, async (req, res) => {
 
 router.post('/:id/checkout', auth, async (req, res)=> {
     try {
-        const cart = await cartManager.checkout(req.params.id, req.user.email);
+        const cart = await cartManager.getCartById(req.params.id);
         res.status(200).json(cart);
     }catch (error){
         res.status (500).json({error: error.message});
