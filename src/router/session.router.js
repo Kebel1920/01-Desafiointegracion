@@ -1,12 +1,12 @@
     import { Router } from "express";
-    import { UsuariosManagerMongo } from "../usuariosManagerMONGO.js";
-    import { creaHash, validaPassword,SECRET } from "../dao.factory.js";
+    import { UsuariosManagerMongo } from "../dao/usuariosManagerMONGO.js";
+    import { creaHash, validaPassword,SECRET } from "../dao/dao.factory.js";
     import jwt from "jsonwebtoken";
     // import * as dotenv from 'dotenv';
     import { authenticateToken } from "../middlewares/auth.jwt.js";
     // import { usuariosModel } from "../models/usuarios.model.js";
-    import sendEmail from "../../nodemailer/nodemailer.js";
-import { usuariosModel } from "../models/usuarios.model.js";
+    import sendEmail from "../nodemailer/nodemailer.js";
+import { usuariosModel } from "../dao/models/usuarios.model.js";
 
 
 

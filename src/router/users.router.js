@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { usuariosModel } from "../models/usuarios.model.js";
+import { usuariosModel } from "../dao/models/usuarios.model.js";
 import upload from "../middlewares/multer.js";
 import { authenticateToken } from "../middlewares/auth.jwt.js";
 

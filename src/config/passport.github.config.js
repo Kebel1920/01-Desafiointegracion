@@ -1,6 +1,6 @@
 import passport from "passport"
 import github from "passport-github2"
-import { usuariosModel } from "../../dao/models/usuarios.model.js"
+import { usuariosModel } from "../dao/models/usuarios.model.js"
 
 
 export const initPassport=()=>{

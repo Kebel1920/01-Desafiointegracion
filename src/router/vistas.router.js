@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { productDao } from "../dao.factory.js";
+import { productDao } from "../dao/dao.factory.js";
 import { auth } from "../middlewares/auth.js";
-import { SECRET } from "../dao.factory.js";
+import { SECRET } from "../dao/dao.factory.js";
 import jwt from 'jsonwebtoken'
-import { MongoProduct } from "../models/mongo.models.js";
+import { MongoProduct } from "../dao/models/mongo.models.js";
 
 
 

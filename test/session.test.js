@@ -3,7 +3,7 @@ import app from '../../app'; // Asumiendo que tu app está en app.js
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { UsuariosManagerMongo } from '../usuariosManagerMONGO.js';
-import { usuariosModel } from '../models/usuarios.model.js';
+import { usuariosModel } from '../src/dao/models/usuarios.model.js';
 import { creaHash, validaPassword, SECRET } from '../dao.factory.js';
 import jwt from 'jsonwebtoken';
 import sendEmail from '../../nodemailer/nodemailer.js';

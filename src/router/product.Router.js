@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { productDao } from '../dao.factory.js';
+import { productDao } from '../dao/dao.factory.js';
 import { auth } from '../middlewares/auth.js';
 import { getProductUsuario } from '../Controller/products.controller.js';
 

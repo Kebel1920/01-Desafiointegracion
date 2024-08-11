@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { SECRET } from "../../dao/dao.factory.js";
+import { SECRET } from "../dao/dao.factory.js";
 // import * as dotenv from 'dotenv';
 
 

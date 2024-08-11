@@ -1,6 +1,6 @@
 import express from 'express';
 import CartManager from '../cart.manager.js';
-import { auth } from '../../middlewares/auth.js';
+import { auth } from '../../../middlewares/auth.js';
 
 // app.use(express.json());
 const router = express.Router();
