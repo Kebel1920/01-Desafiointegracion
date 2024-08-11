@@ -1,4 +1,4 @@
-import { MongoProduct } from '../models/mongo.models.js';
+import { MongoProduct } from '../dao/models/mongo.models.js';
 
 export async function getProductUsuario(req, res) {
     try {

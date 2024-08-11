@@ -134,7 +134,7 @@ import { router as sessionsRouter } from './dao/router/session.router.js';
 import { router as githubRouter } from './dao/router/github.router.js';
 import { router as cartRouter } from './dao/cart/router/cart.router.js';
 import { router as usersRouter } from './dao/router/users.router.js';
-import { router as paymentRouter } from './payments/payment.router.js';
+import { router as paymentRouter } from './router/payments/payment.router.js';
 
 dotenv.config();
 const app = express();
